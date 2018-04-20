@@ -1,0 +1,5 @@
+rootProject.name = 'grpc-benchmark'
+include 'benchmark'
+include 'http-server'
+include 'grpc-server'
+

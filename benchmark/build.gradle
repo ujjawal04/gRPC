@@ -1,0 +1,26 @@
+mainClassName = 'benchmark.HttpServerBenchmark'
+
+apply plugin: 'com.google.protobuf'
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.5.1-1"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.11.0'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+dependencies {
+    compile 'org.openjdk.jmh:jmh-core:0.9'
+    compile 'org.openjdk.jmh:jmh-generator-annprocess:0.9'
+    compile 'org.apache.httpcomponents:httpclient:4.5.5'
+    compile 'com.googlecode.json-simple:json-simple:1.1'
+}

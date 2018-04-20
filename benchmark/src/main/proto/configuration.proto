@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package com.example.grpcserver;
+option java_multiple_files = true;
+
+message UserCreateRequest {
+    string name = 1;
+    int32 age = 2;
+}
+
+message UserCreateResponse {
+    string status = 1;
+}
+
+service User {
+    rpc create (UserCreateRequest) returns (UserCreateResponse) {}
+}
