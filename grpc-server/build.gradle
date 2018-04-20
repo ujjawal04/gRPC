@@ -12,8 +12,10 @@ protobuf {
         }
     }
     generateProtoTasks {
-        all()*.plugins {
-            grpc {}
+        ofSourceSet('main').each { task ->
+            task.plugins {
+                grpc {}
+            }
         }
     }
 }
