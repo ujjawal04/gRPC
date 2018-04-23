@@ -19,14 +19,4 @@ public class UserController {
 
         return "User created successfully.";
     }
-
-    @RequestMapping(value = "/grpc", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public String createUserGrpc(@RequestBody Map<String, Object> payload) {
-        String name = payload.get("name").toString();
-        int age = Integer.parseInt(payload.get("age").toString());
-
-        new User(name, age);
-
-        return "User created successfully.";
-    }
 }

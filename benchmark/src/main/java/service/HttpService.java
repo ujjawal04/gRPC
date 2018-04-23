@@ -14,19 +14,44 @@ import org.json.simple.JSONObject;
 import java.io.IOException;
 
 public class HttpService {
-    public void connect() {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpPost request = new HttpPost("http://0.0.0.0:8080");
-        JSONObject payload = new JSONObject();
-        payload.put("name", "Ashish");
-        payload.put("age", 21);
+    private CloseableHttpClient httpClient = HttpClients.createDefault();
+    private HttpPost request;
 
-        request.setHeader("Content-Type", "application/json");
+    private JSONObject generatePayload(JSONObject payload) {
+        payload.put("name", "This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.");
+        payload.put("age", 21);
+        payload.put("aadhaar", 342453421);
+        payload.put("salary", 32424.1234);
+        payload.put("isDev", Boolean.TRUE);
+        payload.put("address", "This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.");
+
+        return payload;
+    }
+
+    private HttpPost generateHttpRequest(String payloadType) {
+        String path;
+
+        if (payloadType.equals("json")) {
+            path = "8080/";
+        } else {
+            path = "7070/v1/example/echo";
+        }
+
+        return new HttpPost("http://0.0.0.0:" + path);
+    }
+
+    public HttpService(String payloadType) {
+        JSONObject payload = generatePayload(new JSONObject());
         StringEntity requestEntity = new StringEntity(payload.toString(), ContentType.APPLICATION_JSON);
 
+        this.request = generateHttpRequest(payloadType);
+        this.request.setHeader("Content-Type", "application/json");
+        this.request.setEntity(requestEntity);
+    }
+
+    public void connect() {
         try {
-            request.setEntity(requestEntity);
-            CloseableHttpResponse response = httpClient.execute(request);
+            CloseableHttpResponse response = this.httpClient.execute(request);
 
             try {
                 HttpEntity httpEntity = response.getEntity();

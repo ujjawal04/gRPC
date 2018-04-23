@@ -9,7 +9,7 @@ import io.grpc.stub.StreamObserver;
 public class UserService extends UserGrpc.UserImplBase {
     @Override
     public void create(UserCreateRequest request, StreamObserver<UserCreateResponse> responseStreamObserver) {
-        new User(request.getName(), request.getAge());
+        new User(request.getName(), request.getAge(), request.getAadhaar(), request.getSalary(), request.getIsDev(), request.getAddress());
 
         UserCreateResponse response = UserCreateResponse.newBuilder().setStatus("User Created Successfully!!!").build();
 

@@ -6,6 +6,10 @@ option java_multiple_files = true;
 message UserCreateRequest {
     string name = 1;
     int32 age = 2;
+    int64 aadhaar = 3;
+    double salary = 4;
+    bool isDev = 5;
+    string address = 6;
 }
 
 message UserCreateResponse {

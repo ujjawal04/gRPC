@@ -7,23 +7,35 @@ import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 
 public class GrpcService {
-    public void connect() {
-        ManagedChannel channel = ManagedChannelBuilder.forAddress("localhost", 8081)
+    private ManagedChannel channel;
+    private UserGrpc.UserBlockingStub stub;
+    private UserCreateRequest request;
+
+    public GrpcService() {
+        this.channel = ManagedChannelBuilder.forAddress("localhost", 9090)
                 .usePlaintext()
                 .build();
 
-        UserGrpc.UserBlockingStub stub = UserGrpc.newBlockingStub(channel);
+        this.stub = UserGrpc.newBlockingStub(this.channel);
 
-        UserCreateRequest request = UserCreateRequest.newBuilder()
-                .setName("Ashish")
+        this.request = UserCreateRequest.newBuilder()
+                .setName("This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.")
                 .setAge(21)
+                .setAadhaar(56784362)
+                .setSalary(2343254.21)
+                .setIsDev(true)
+                .setAddress("This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.This is a very long address. A very very long address indeed.")
                 .build();
+    }
 
-        try {
-            UserCreateResponse response = stub.create(request);
+    @Override
+    protected void finalize() throws Throwable {
+        this.channel.shutdown();
 
-        } finally {
-            channel.shutdown();
-        }
+        super.finalize();
+    }
+
+    public void connect() {
+        UserCreateResponse response = this.stub.create(this.request);
     }
 }
