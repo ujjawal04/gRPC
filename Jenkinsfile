@@ -1,9 +1,15 @@
 pipeline {
-  agent any
+  agent {
+    docker {
+      image 'gradle:4.8-jdk8-alpine'
+      args '-v /home/ujjawaln/.gradlew/caches'
+    }
+
+  }
   stages {
     stage('Initial Message') {
       steps {
-        echo 'This is a minimal Jenkins pipeline.'
+        sh './gradlew clean'
       }
     }
   }
