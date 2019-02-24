@@ -1,15 +1,15 @@
 pipeline {
   agent {
     docker {
-      image 'gradle:4.8-jdk8-alpine'
       args '-v /home/ujjawaln/.gradlew/caches'
+      image 'gradle:4.4-jdk8-alpine'
     }
 
   }
   stages {
     stage('Initial Message') {
       steps {
-        sh './gradlew clean'
+        sh './gradlew build'
       }
     }
   }
